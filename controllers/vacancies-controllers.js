@@ -1,28 +1,18 @@
 import Vacancy from "../models/vacancy.js"
 
-export const getAllVacancies = (req, res, next) => {
-  console.log("fetching all");
-  res.status(200).json({
-    message: "Successfully fetched vacancies",
-    data: [
-      {
-        company: "TechCorp",
-        position: "Frontend Developer",
-        salary: "$60,000 - $80,000",
-        status: "Open",
-        note: "Remote position available",
-        _id: "1",
-      },
-      {
-        company: "BizGroup",
-        position: "Backend Developer",
-        salary: "$70,000 - $90,000",
-        status: "Closed",
-        note: "On-site only",
-        _id: "2",
-      },
-    ],
-  });
+export const getAllVacancies = async (req, res, next) => {
+  try {
+    const vacancies = await Vacancy.find();
+    res.status(200).json({
+      message: "Successfully fetched vacancies",
+      data: vacancies,
+    });
+  } catch (error) {
+    console.error("Error fetching vacancies:", error);
+    res.status(500).json({
+      message: "Failed to fetch vacancies. Please try again later.",
+    });
+  }
 };
 
 export const createVacancy = async (req, res, next) => {

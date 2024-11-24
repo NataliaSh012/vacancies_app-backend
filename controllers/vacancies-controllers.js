@@ -45,3 +45,35 @@ export const createVacancy = async (req, res, next) => {
       .json({ message: "Failed to create vacancy. Please try again later." });
   }
 };
+
+export const updateVacancy = async (req, res, next) => {
+  console.log("Updating")
+  const { id } = req.params;
+  const { company, position, salary, status, note } = req.body; 
+
+  try {
+    const vacancy = await Vacancy.findById(id);
+
+    if (!vacancy) {
+      return res.status(404).json({ message: "Vacancy not found" });
+    }
+
+    vacancy.company = company || vacancy.company;
+    vacancy.position = position || vacancy.position;
+    vacancy.salary = salary || vacancy.salary;
+    vacancy.status = status || vacancy.status;
+    vacancy.note = note || vacancy.note;
+
+    const updatedVacancy = await vacancy.save();
+
+    res
+      .status(200)
+      .json({
+        message: "Vacancy updated successfully",
+        vacancy: updatedVacancy,
+      });
+  } catch (error) {
+    console.error("Error updating vacancy:", error);
+    res.status(500).json({ message: "Failed to update vacancy" });
+  }
+};

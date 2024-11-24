@@ -2,6 +2,8 @@ import vacanciesRoutes from "./routes/vacancy-routes.js";
 import bodyParser from "body-parser";
 import express from "express";
 import { connect } from "mongoose";
+import httpError from "./models/http-error.js";
+
 const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.5scabyv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const app = express();
 const { json } = bodyParser;

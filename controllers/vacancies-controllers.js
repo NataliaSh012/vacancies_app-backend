@@ -4,7 +4,6 @@ export const getAllVacancies = async (req, res, next) => {
   try {
     const vacancies = await Vacancy.find();
     res.status(200).json({
-      message: "Successfully fetched vacancies",
       data: vacancies,
     });
   } catch (error) {
@@ -29,14 +28,14 @@ export const createVacancy = async (req, res, next) => {
     position,
     salary,
     status,
-    note,
+    note: note || "",
   });
 
   try {
     const savedVacancy = await newVacancy.save();
     res.status(201).json({
       message: "Vacancy was created successfully!",
-      vacancy: savedVacancy,
+      data: savedVacancy,
     });
   } catch (error) {
     console.error("Error creating vacancy:", error);
@@ -66,12 +65,10 @@ export const updateVacancy = async (req, res, next) => {
 
     const updatedVacancy = await vacancy.save();
 
-    res
-      .status(200)
-      .json({
-        message: "Vacancy updated successfully",
-        vacancy: updatedVacancy,
-      });
+    res.status(200).json({
+      message: "Vacancy was updated!",
+      data: updatedVacancy,
+    });
   } catch (error) {
     console.error("Error updating vacancy:", error);
     res.status(500).json({ message: "Failed to update vacancy" });

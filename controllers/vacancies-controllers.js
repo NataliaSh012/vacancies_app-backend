@@ -74,3 +74,27 @@ export const updateVacancy = async (req, res, next) => {
     res.status(500).json({ message: "Failed to update vacancy" });
   }
 };
+
+export const deleteVacancy = async (req, res, next) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "Vacancy ID is required." });
+  }
+
+  try {
+    const deletedVacancy = await Vacancy.findByIdAndDelete(id);
+    if (!deletedVacancy) {
+      return res.status(404).json({ message: "Vacancy not found." });
+    }
+
+    res.status(200).json({
+      message: "Vacancy deleted successfully!",
+      vacancy: deletedVacancy,
+    });
+  } catch (error) {
+    console.error("Error deleting vacancy:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete vacancy. Please try again later." });
+  }
+};

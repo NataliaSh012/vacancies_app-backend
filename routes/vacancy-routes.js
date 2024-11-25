@@ -4,6 +4,7 @@ import {
   getAllVacancies,
   createVacancy,
   updateVacancy,
+  deleteVacancy
 } from "../controllers/vacancies-controllers.js";
 
 const router = Router();
@@ -11,5 +12,6 @@ const router = Router();
 router.get("/", getAllVacancies);
 router.post("/", createVacancy);
 router.patch("/:id", updateVacancy);
+router.delete("/:id", deleteVacancy);
 
 export default router; 

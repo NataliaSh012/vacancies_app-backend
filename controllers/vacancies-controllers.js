@@ -46,7 +46,6 @@ export const createVacancy = async (req, res, next) => {
 };
 
 export const updateVacancy = async (req, res, next) => {
-  console.log("Updating")
   const { id } = req.params;
   const { company, position, salary, status, note } = req.body; 
 
@@ -89,7 +88,7 @@ export const deleteVacancy = async (req, res, next) => {
 
     res.status(200).json({
       message: "Vacancy deleted successfully!",
-      vacancy: deletedVacancy,
+      data: deletedVacancy,
     });
   } catch (error) {
     console.error("Error deleting vacancy:", error);
